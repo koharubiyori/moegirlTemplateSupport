@@ -49,6 +49,6 @@ function createConfig(name, script, cwd, exec_mode, instances = 1, mixin = {}) {
 
 module.exports = {
   apps: [
-    createConfig('moegirlStatistic', 'main.js', '.', 'fork')
+    createConfig('accessCountForMoegirlWeb', 'main.js', '.', 'fork')
   ]
 }
