@@ -1,0 +1,16 @@
+{
+  "name": "accessCountForMoegirl",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "@Inori <2665611998@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "pm2 start pm2.config.js"
+  },
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "koa": "^2.13.0",
+    "koa-router": "^9.4.0",
+    "superagent": "^6.0.0"
+  }
+}
