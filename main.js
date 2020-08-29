@@ -10,14 +10,17 @@ const router = new KoaRouter()
 router.get('/moegirlWeb/accessCountImg', async (ctx, next) => {
   try {  
     const referer = ctx.request.headers.referer
+    const domainRegex = /^https:\/\/(m?zh\.moegirl\.org\.cn\/)/
 
     // 禁止萌百以外的域名使用
-    if (!/^https:\/\/m?zh\.moegirl\.org\.cn/.test(referer)) {
+    if (!domainRegex.test(referer)) {
       ctx.status = 403
       return next()
     }
     
-    const busuanziCount = await getBusuanziCount(referer)
+    const sign = referer.replace(domainRegex, '')
+    const virtualDomain = `https://${sign}.zh.moegirl.org.cn`
+    const busuanziCount = await getBusuanziCount(virtualDomain)
     ctx.body = createNumberImage(busuanziCount, { ...ctx.query })
     ctx.set('Content-Type', 'image/png')
   } catch(e) {
