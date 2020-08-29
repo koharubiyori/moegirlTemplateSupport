@@ -1,7 +1,6 @@
 const canvas = require('canvas')
 const superagent = require('superagent')
 const StringDecoder = require('string_decoder').StringDecoder
-const http = require('http')
 const Koa = require('koa')
 const KoaRouter = require('koa-router')
 
@@ -9,8 +8,15 @@ const app = new Koa()
 const router = new KoaRouter()
 
 router.get('/moegirlWeb/accessCountImg', async (ctx, next) => {
-  try {
+  try {  
     const referer = ctx.request.headers.referer
+
+    // 禁止萌百以外的域名使用
+    if (!/^https:\/\/m?zh\.moegirl\.org\.cn/.test(referer)) {
+      ctx.status = 403
+      return next()
+    }
+    
     const busuanziCount = await getBusuanziCount(referer)
     ctx.body = createNumberImage(busuanziCount, { ...ctx.query })
     ctx.set('Content-Type', 'image/png')
@@ -33,10 +39,11 @@ app.listen(8200, () => {
  * @param {object} [options] 
  * @param {number} [options.fontSize]
  * @param {string} [options.color]
- * @param {string} [options.bgColor]
+ * @param {boolean} [options.fontBold]
  */
 function createNumberImage(text, options = {}) {
   options.fontSize = parseInt(options.fontSize) || 14
+  options.fontBold = options.fontBold === 'true'
   text = text.toString()
 
   const canvasSize = {
@@ -45,11 +52,6 @@ function createNumberImage(text, options = {}) {
   }
   const canvasInstance = canvas.createCanvas(canvasSize.width, canvasSize.height)
   const ctx = canvasInstance.getContext('2d')
-
-  if (options.bgColor) {
-    ctx.fillStyle = options.bgColor
-    ctx.fillRect(0, 0, canvasSize.width, canvasSize.height)
-  }
 
   ctx.textBaseline = 'middle'
   ctx.fillStyle = options.color || 'black'
