@@ -20,8 +20,9 @@ router.get('/moegirlWeb/accessCountImg', async (ctx, next) => {
         ctx.response.redirect('https://zh.moegirl.org.cn/Template:AccessCount')
       } else {
         ctx.status = 403
-        return next()
       }
+      
+      return next()
     }
     
     const sign = md5(referer.replace(domainRegex, ''))
