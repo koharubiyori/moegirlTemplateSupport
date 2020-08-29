@@ -15,8 +15,13 @@ router.get('/moegirlWeb/accessCountImg', async (ctx, next) => {
 
     // 禁止萌百以外的域名使用
     if (!domainRegex.test(referer)) {
-      ctx.status = 403
-      return next()
+      if (referer === undefined) {
+        // 用户直接访问则跳到模板说明页面
+        ctx.response.redirect('https://zh.moegirl.org.cn/Template:AccessCount')
+      } else {
+        ctx.status = 403
+        return next()
+      }
     }
     
     const sign = md5(referer.replace(domainRegex, ''))
