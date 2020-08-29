@@ -3,6 +3,7 @@ const superagent = require('superagent')
 const StringDecoder = require('string_decoder').StringDecoder
 const Koa = require('koa')
 const KoaRouter = require('koa-router')
+const md5 = require('md5')
 
 const app = new Koa()
 const router = new KoaRouter()
@@ -18,7 +19,7 @@ router.get('/moegirlWeb/accessCountImg', async (ctx, next) => {
       return next()
     }
     
-    const sign = referer.replace(domainRegex, '')
+    const sign = md5(referer.replace(domainRegex, ''))
     const virtualDomain = `https://${sign}.zh.moegirl.org.cn`
     const busuanziCount = await getBusuanziCount(virtualDomain)
     ctx.body = createNumberImage(busuanziCount, { ...ctx.query })
