@@ -1,29 +1,19 @@
-const canvas = require('canvas')
 const superagent = require('superagent')
 const StringDecoder = require('string_decoder').StringDecoder
-const Koa = require('koa')
-const KoaRouter = require('koa-router')
 const md5 = require('md5')
+const canvas = require('canvas')
 
-const app = new Koa()
-const router = new KoaRouter()
-
-router.get('/moegirlWeb/accessCountImg', async (ctx, next) => {
+/*
+  interface Query {
+    fontSize?: number
+    color?: string
+    fontBold?: boolean
+  }
+*/
+module.exports = async function accessCountImg(ctx, next) {
   try {  
     const referer = ctx.request.headers.referer
     const domainRegex = /^https:\/\/(m?zh\.moegirl\.org\.cn\/)/
-
-    // 禁止萌百以外的域名使用
-    if (!domainRegex.test(referer)) {
-      if (referer === undefined) {
-        // 用户直接访问则跳到模板说明页面
-        ctx.response.redirect('https://zh.moegirl.org.cn/Template:AccessCount')
-      } else {
-        ctx.status = 403
-      }
-      
-      return next()
-    }
     
     const sign = md5(referer.replace(domainRegex, ''))
     const virtualDomain = `https://${sign}.zh.moegirl.org.cn`
@@ -36,12 +26,8 @@ router.get('/moegirlWeb/accessCountImg', async (ctx, next) => {
   }
 
   next()
-})
+}
 
-app.use(router.routes())
-app.listen(8200, () => {
-  console.log('已启动服务：http://localhost:8200')
-})
 
 /**
  * 创建一个以数字数字为内容的图片buffer

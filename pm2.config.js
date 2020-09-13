@@ -49,6 +49,6 @@ function createConfig(name, script, cwd, exec_mode, instances = 1, mixin = {}) {
 
 module.exports = {
   apps: [
-    createConfig('accessCountForMoegirlWeb', 'main.js', '.', 'cluster_mode', 2)
+    createConfig('accessCountForMoegirlWeb', './src/main.js', '.', 'cluster_mode', 2)
   ]
 }
