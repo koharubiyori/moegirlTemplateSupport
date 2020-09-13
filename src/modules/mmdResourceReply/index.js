@@ -20,6 +20,7 @@ module.exports = async function mmdResourceReply(ctx, next) {
       .get(sourceUrl(repo, modelName))
 
     ctx.body = mmdData.body
+    ctx.set('cache-control', 'public, max-age=2592000, s-maxage=2592000')
   } catch(e) {
     console.log(e)
     ctx.status = 502
