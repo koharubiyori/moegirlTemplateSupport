@@ -11,6 +11,13 @@ const prefix = moduleName => '/moegirlWeb/' + moduleName
 
 router.get(prefix('accessCountImg'), accessCountImg)
 router.get(prefix('mmdResourceReply'), mmdResourceReply)
+router.options('/*', async (ctx, next) => {
+  ctx.status = 200
+  ctx.set({
+    'Access-Control-Allow-Methods': ctx.method,
+    'Access-Control-Allow-Headers': 'content-type,token',
+  })
+})
 
 app.use(originChecker(
   /^https?:\/\/zh\.moegirl\.org\.cn$/,
