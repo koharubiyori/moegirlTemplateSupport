@@ -1,4 +1,5 @@
 const superagent = require('superagent')
+const request = require('request')
 const sourceUrl = (repo, modelName) => `https://koharubiyori.gitee.io/${repo}/${modelName}.jpg`
 
 /*
@@ -16,11 +17,8 @@ module.exports = async function mmdResourceReply(ctx, next) {
       return next()
     }
 
-    const mmdData = await superagent
-      .get(sourceUrl(repo, modelName))
-
-    ctx.body = mmdData.body
     ctx.set('cache-control', 'public, max-age=2592000, s-maxage=2592000')
+    ctx.body = request(sourceUrl(repo, modelName))
   } catch(e) {
     console.log(e)
     ctx.status = 502
