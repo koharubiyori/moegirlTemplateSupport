@@ -1,4 +1,3 @@
-const superagent = require('superagent')
 const request = require('request')
 const sourceUrl = (repo, modelName) => `https://koharubiyori.gitee.io/${repo}/${modelName}.jpg`
 

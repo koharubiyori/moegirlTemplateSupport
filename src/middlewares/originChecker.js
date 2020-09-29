@@ -13,7 +13,7 @@ module.exports = function originChecker(...originPatterns) {
     if (
       originPatterns.some(patterns => patterns.test(origin))
     ) {
-      ctx.set('Access-Control-Allow-Origin', origin)
+      ctx.set('Access-Control-Allow-Origin', '*')
     }
 
     await next()
