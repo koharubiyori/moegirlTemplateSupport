@@ -13,7 +13,7 @@ router.get(prefix('accessCountImg'), accessCountImg)
 router.get(prefix('mmdResourceReply'), mmdResourceReply)
 
 app.use(originChecker(
-  /^https?:\/\/zh\.moegirl\.org\.cn$/,
+  /^https?:\/\/m?zh\.moegirl\.org\.cn$/,
   /^http:\/\/localhost:\d+$/
 ))
 app.use(router.routes())
