@@ -12,7 +12,7 @@ const canvas = require('canvas')
 */
 module.exports = async function accessCountImg(ctx, next) {
   try {  
-    const referer = ctx.request.headers.referer
+    const referer = ctx.request.headers.referer || 'http://localhost:8200'
     const domainRegex = /^https:\/\/(m?zh\.moegirl\.org\.cn\/)/
     
     const sign = md5(referer.replace(domainRegex, ''))

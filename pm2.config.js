@@ -23,8 +23,8 @@ function createConfig(name, script, cwd, exec_mode, instances = 1, mixin = {}) {
     exec_mode, // 应用启动模式，支持fork和cluster模式
     instances, // 应用启动实例个数，仅在cluster模式有效 默认为fork；或者 max
     // max_memory_restart: 8, // 最大内存限制数，超出自动重启
-    error_file: `./logs/${name}-error.log`, // 错误日志文件
-    out_file: `./logs/${name}-output.log`, // 正常日志文件
+    error_file: `./logs/error.log`, // 错误日志文件
+    out_file: `./logs/output.log`, // 正常日志文件
     merge_logs: true, // 设置追加日志而不是新建日志
     log_date_format: 'YYYY-MM-DD HH:mm:ss', // 指定日志文件的时间格式
     min_uptime: '10s', // 应用运行少于时间被认为是异常启动
